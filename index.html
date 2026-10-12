@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>רישום ללינה בחדרי האירוח | לב חב"ד אסף הרופא</title>
+<meta name="description" content="טופס רישום ללינה בחדרי האירוח של לב חב&quot;ד במרכז הרפואי שמיר - אסף הרופא">
+<meta property="og:title" content="רישום ללינה בחדרי האירוח | לב חב&quot;ד אסף הרופא">
+<meta property="og:image" content="banner.jpg">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --burgundy:#600627;
+    --burgundy-dark:#45041c;
+    --orange:#f28c38;
+    --orange-soft:#fff3e8;
+    --bg:#faf6f2;
+    --card:#ffffff;
+    --text:#2a1a1f;
+    --muted:#7a6a6f;
+    --line:#e7dcd6;
+    --error:#c0392b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Heebo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- כותרת עליונה עם לוגו ---------- */
+  .topbar{
+    background:#fff;
+    display:flex;justify-content:center;align-items:center;
+    padding:14px 16px;
+    border-bottom:4px solid var(--orange);
+  }
+  .topbar img{height:62px;width:auto;display:block}
+  @media (min-width:600px){ .topbar img{height:78px} }
+
+  /* ---------- באנר ראשי: התמונה היא הרקע ---------- */
+  .hero{
+    position:relative;
+    height:470px;
+    background:#2a0a14 url("banner.jpg") 92% 30%/cover no-repeat;
+    display:flex;align-items:flex-end;justify-content:center;
+    text-align:center;color:#fff;
+    padding:0 16px 92px;
+  }
+  @media (min-width:700px){ .hero{height:min(48vw,580px);background-position:center 45%;padding-bottom:104px} }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(to top, rgba(40,3,17,.88) 0%, rgba(40,3,17,.5) 30%, rgba(40,3,17,0) 58%),
+      linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,0) 18%);
+  }
+  .hero-text{position:relative;max-width:520px}
+  .hero h1{margin:0 0 4px;font-size:clamp(28px,6.5vw,40px);font-weight:800;letter-spacing:-.3px;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .hero p{margin:0;opacity:.92;font-size:16px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+
+  .wrap{max-width:560px;margin:-72px auto 0;padding:0 16px;position:relative}
+  .card{
+    background:var(--card);
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(69,4,28,.12);
+    padding:22px 20px 26px;
+  }
+  @media (min-width:520px){ .card{padding:28px 32px 32px} }
+
+  /* ---------- הודעת תיאום מראש ---------- */
+  .notice{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--orange-soft);
+    border:1px solid #f9d3b0;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:22px;
+    font-size:15px;font-weight:500;color:var(--burgundy);
+  }
+  .notice svg{flex:none;margin-top:2px}
+
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:15px;font-weight:700;color:var(--burgundy);
+    margin:22px 0 12px;
+  }
+  .section-title.first{margin-top:0}
+  .section-title::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--orange)}
+  .row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
+  @media (min-width:440px){ .row.two{grid-template-columns:1fr 1fr} }
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .row .field{margin-bottom:0}
+  label{font-size:14px;font-weight:500}
+  label .req{color:var(--burgundy);margin-inline-start:2px}
+  label .opt{color:var(--muted);font-weight:400;font-size:13px}
+  input,select,textarea{
+    font:inherit;font-size:16px;color:var(--text);
+    width:100%;padding:11px 13px;
+    border:1.5px solid var(--line);border-radius:10px;background:#fff;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input[type=date]{min-height:46px}
+  textarea{min-height:84px;resize:vertical}
+  input:focus,select:focus,textarea:focus{
+    outline:none;border-color:var(--burgundy);
+    box-shadow:0 0 0 3px rgba(96,6,39,.12);
+  }
+  .invalid{border-color:var(--error)!important}
+  .err{color:var(--error);font-size:13px}
+  .err:empty{display:none}
+
+  /* ---------- אישור דיוור ---------- */
+  .consent{
+    display:flex;align-items:flex-start;gap:10px;
+    font-size:13.5px;color:var(--muted);line-height:1.5;
+    cursor:pointer;margin:8px 0 0;
+  }
+  .consent input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--burgundy);flex:none;padding:0}
+
+  .hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;opacity:0}
+
+  button{
+    font:inherit;font-weight:700;font-size:17px;
+    width:100%;margin-top:22px;padding:14px 18px;
+    border:0;border-radius:12px;
+    background:var(--burgundy);color:#fff;cursor:pointer;
+    transition:background .15s, transform .05s;
+  }
+  button:hover{background:var(--burgundy-dark)}
+  button:active{transform:translateY(1px)}
+  button[disabled]{opacity:.65;cursor:wait}
+  .form-msg{margin-top:14px;text-align:center;font-size:14px;color:var(--error)}
+  .form-msg:empty{display:none}
+
+  .done{text-align:center;padding:18px 4px 6px;display:none}
+  .done.show{display:block}
+  .done .icon{width:68px;height:68px;border-radius:50%;margin:0 auto 14px;background:var(--orange-soft);display:grid;place-items:center}
+  .done h2{margin:0 0 8px;color:var(--burgundy);font-size:24px}
+  .done p{margin:0 0 6px;color:var(--muted)}
+  .link-btn{background:none;color:var(--burgundy);text-decoration:underline;width:auto;margin-top:14px;padding:6px;font-weight:500;font-size:15px}
+  .link-btn:hover{background:none}
+
+  .contact{margin-top:18px;text-align:center;font-size:14px;color:var(--muted)}
+  .contact a{color:var(--burgundy);font-weight:700;text-decoration:none;white-space:nowrap}
+
+  /* ---------- גלריה מתחלפת ---------- */
+  .gallery{max-width:760px;margin:40px auto 0;padding:0 16px}
+  .gallery h2{
+    text-align:center;color:var(--burgundy);font-size:20px;font-weight:800;margin:0 0 14px;
+  }
+  .slider{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(69,4,28,.12);background:#eee}
+  .track{
+    display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    scrollbar-width:none;
+  }
+  .track::-webkit-scrollbar{display:none}
+  .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:3/2;position:relative}
+  .slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:40px;height:40px;margin:0;padding:0;border-radius:50%;
+    background:rgba(255,255,255,.88);color:var(--burgundy);
+    display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  .nav:hover{background:#fff}
+  .nav.prev{right:10px}
+  .nav.next{left:10px}
+  .dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+  .dots button{
+    width:9px;height:9px;padding:0;margin:0;border-radius:50%;
+    background:#d9c9c2;
+  }
+  .dots button.active{background:var(--orange);width:24px;border-radius:5px}
+
+  .nav[hidden],.gallery[hidden]{display:none}
+  footer{text-align:center;font-size:12.5px;color:var(--muted);padding:32px 16px 28px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="logo.png" alt="לב חב&quot;ד במרכז הרפואי שמיר - אסף הרופא">
+</div>
+
+<header class="hero" role="img" aria-label="חדרי האירוח של לב חב&quot;ד באסף הרופא">
+  <div class="hero-text">
+    <h1>רישום ללינה בחדרי האירוח</h1>
+    <p>לב חב"ד במרכז הרפואי שמיר - אסף הרופא</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+
+    <form id="regForm" novalidate>
+      <div class="notice">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>הרישום מותנה בתיאום מראש עם הרב מענדי ברקמן</span>
+      </div>
+
+      <div class="section-title first">פרטי הנרשם</div>
+
+      <div class="row two">
+        <div class="field">
+          <label for="firstName">שם פרטי<span class="req">*</span></label>
+          <input id="firstName" name="firstName" autocomplete="given-name" required>
+          <div class="err"></div>
+        </div>
+        <div class="field">
+          <label for="lastName">שם משפחה<span class="req">*</span></label>
+          <input id="lastName" name="lastName" autocomplete="family-name" required>
+          <div class="err"></div>
+        </div>
+      </div>
+
+      <div class="row two">
+        <div class="field">
+          <label for="phone">טלפון<span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" style="text-align:right" placeholder="05X-XXXXXXX" required>
+          <div class="err"></div>
+        </div>
+        <div class="field">
+          <label for="email">אימייל<span class="req">*</span></label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" style="text-align:right" placeholder="name@example.com" required>
+          <div class="err"></div>
+        </div>
+      </div>
+
+      <div class="section-title">פרטי המטופל</div>
+
+      <div class="row two">
+        <div class="field">
+          <label for="relation">קרבה למטופל<span class="req">*</span></label>
+          <select id="relation" name="relation" required>
+            <option value="">בחרו...</option>
+            <option>הורה</option>
+            <option>בן/בת זוג</option>
+            <option>בן/בת</option>
+            <option>אח/אחות</option>
+            <option>סבא/סבתא</option>
+            <option>קרוב משפחה אחר</option>
+            <option>חבר/ה</option>
+            <option>אחר</option>
+          </select>
+          <div class="err"></div>
+        </div>
+        <div class="field">
+          <label for="department">מחלקה בה המטופל נמצא<span class="req">*</span></label>
+          <input id="department" name="department" placeholder="לדוגמה: פנימית ב'" required>
+          <div class="err"></div>
+        </div>
+      </div>
+
+      <div class="section-title">פרטי הלינה</div>
+
+      <div class="row two">
+        <div class="field">
+          <label for="arrival">תאריך הגעה<span class="req">*</span></label>
+          <input id="arrival" name="arrival" type="date" required>
+          <div class="err"></div>
+        </div>
+        <div class="field">
+          <label for="departure">תאריך עזיבה משוער <span class="opt">(אם ידוע)</span></label>
+          <input id="departure" name="departure" type="date">
+          <div class="err"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="guests">מספר לנים<span class="req">*</span></label>
+        <input id="guests" name="guests" type="number" inputmode="numeric" min="1" max="20" value="1" required>
+        <div class="err"></div>
+      </div>
+
+      <div class="field">
+        <label for="notes">הערות <span class="opt">(לא חובה)</span></label>
+        <textarea id="notes" name="notes" placeholder="כל דבר שחשוב שנדע"></textarea>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="marketing" name="marketing" checked>
+        <span>אני מאשר/ת קבלת עדכונים, מידע ודברי פרסום מלב חב"ד באמצעות דוא"ל, מסרונים (SMS) ווואטסאפ. ניתן לבטל את ההסכמה בכל עת.</span>
+      </label>
+
+      <!-- מלכודת לבוטים: שדה מוסתר שאנשים לא רואים -->
+      <div class="hp" aria-hidden="true">
+        <label>אל תמלאו שדה זה <input name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button type="submit" id="submitBtn">שליחת רישום</button>
+      <div class="form-msg" id="formMsg" role="alert"></div>
+    </form>
+
+    <div class="done" id="done" aria-live="polite">
+      <div class="icon">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#600627" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2>הרישום התקבל!</h2>
+      <p id="doneText">תודה, הפרטים נשמרו אצלנו.</p>
+      <button type="button" class="link-btn" id="againBtn">רישום נוסף</button>
+    </div>
+
+    <div class="contact">
+      לכל שאלה: הרב מענדי ברקמן ·
+      <a href="tel:0536290363">053-629-0363</a>
+    </div>
+  </div>
+</main>
+
+<!-- ============ גלריה מתחלפת ============
+     התמונות מוגדרות בקוד למטה, ברשימה GALLERY_IMAGES.
+     כל עוד הרשימה ריקה - הגלריה פשוט לא מוצגת. -->
+<section class="gallery" id="gallery" aria-label="גלריית תמונות" hidden>
+  <h2>מחדרי האירוח שלנו</h2>
+  <div class="slider">
+    <div class="track" id="track"></div>
+    <button class="nav prev" id="prevBtn" aria-label="התמונה הקודמת">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <button class="nav next" id="nextBtn" aria-label="התמונה הבאה">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+  </div>
+  <div class="dots" id="dots"></div>
+</section>
+
+<footer>לב חב"ד - חסד ומרפא · הכתובת שלך במרכז הרפואי</footer>
+
+<script>
+  // ============================================================
+  //  כאן מדביקים את הכתובת שמקבלים מ-Google Apps Script (שלב 4 בהוראות)
+  // ============================================================
+  const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+
+  // ============================================================
+  //  תמונות הגלריה: מעלים את הקבצים ל-GitHub (לאותה תיקייה) וכותבים כאן את השמות.
+  //  לדוגמה: ["gallery-1.jpg", "gallery-2.jpg", "gallery-3.jpg"]
+  //  רשימה ריקה = הגלריה לא מוצגת.
+  // ============================================================
+  const GALLERY_IMAGES = [];
+
+  const form = document.getElementById("regForm");
+  const btn = document.getElementById("submitBtn");
+  const formMsg = document.getElementById("formMsg");
+  const done = document.getElementById("done");
+
+  const todayStr = new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+  document.getElementById("arrival").value = todayStr;
+
+  function setErr(id, msg){
+    const el = document.getElementById(id);
+    const err = el.closest(".field").querySelector(".err");
+    el.classList.toggle("invalid", !!msg);
+    if (err) err.textContent = msg || "";
+    return !msg;
+  }
+  form.addEventListener("input", e => {
+    if (e.target.classList.contains("invalid")) setErr(e.target.id, "");
+  });
+
+  function validate(d){
+    let ok = true;
+    ok = setErr("firstName", d.firstName ? "" : "נא למלא שם פרטי") && ok;
+    ok = setErr("lastName", d.lastName ? "" : "נא למלא שם משפחה") && ok;
+    const digits = d.phone.replace(/\D/g,"");
+    ok = setErr("phone", /^0\d{8,9}$/.test(digits) || /^972\d{8,9}$/.test(digits) ? "" : "נא למלא מספר טלפון תקין") && ok;
+    ok = setErr("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) ? "" : "נא למלא כתובת אימייל תקינה") && ok;
+    ok = setErr("relation", d.relation ? "" : "נא לבחור קרבה") && ok;
+    ok = setErr("department", d.department ? "" : "נא למלא מחלקה") && ok;
+    ok = setErr("arrival", d.arrival ? "" : "נא לבחור תאריך הגעה") && ok;
+    ok = setErr("departure", (!d.departure || !d.arrival || d.departure >= d.arrival) ? "" : "תאריך העזיבה לפני תאריך ההגעה") && ok;
+    const g = Number(d.guests);
+    ok = setErr("guests", Number.isInteger(g) && g >= 1 && g <= 20 ? "" : "נא למלא מספר בין 1 ל-20") && ok;
+    return ok;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    formMsg.textContent = "";
+    const fd = new FormData(form);
+    const d = {};
+    for (const [k,v] of fd.entries()) d[k] = typeof v === "string" ? v.trim() : v;
+    d.marketing = document.getElementById("marketing").checked;
+
+    if (!validate(d)){
+      const first = form.querySelector(".invalid");
+      if (first) first.focus();
+      return;
+    }
+    if (SCRIPT_URL.startsWith("PASTE_")){
+      formMsg.textContent = "הטופס עוד לא חובר לגיליון (חסרה כתובת Apps Script).";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "שולח...";
+    try{
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(d)
+      });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || "שגיאה");
+      form.style.display = "none";
+      document.getElementById("doneText").textContent =
+        "תודה, הפרטים נשמרו. שלחנו אישור לכתובת " + d.email + ".";
+      done.classList.add("show");
+      done.scrollIntoView({behavior:"smooth", block:"center"});
+    } catch(err){
+      formMsg.textContent = "משהו השתבש בשליחה. נסו שוב בעוד רגע, ואם זה חוזר - התקשרו לרב מענדי.";
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "שליחת רישום";
+    }
+  });
+
+  document.getElementById("againBtn").addEventListener("click", () => {
+    form.reset();
+    document.getElementById("arrival").value = todayStr;
+    done.classList.remove("show");
+    form.style.display = "";
+  });
+
+  // ---------------- גלריה ----------------
+  (function(){
+    const track = document.getElementById("track");
+    const dotsBox = document.getElementById("dots");
+    if (!GALLERY_IMAGES.length) return;
+    document.getElementById("gallery").hidden = false;
+    GALLERY_IMAGES.forEach((src, i) => {
+      const div = document.createElement("div");
+      div.className = "slide";
+      const img = document.createElement("img");
+      img.src = src; img.alt = "חדרי האירוח - תמונה " + (i+1); img.loading = "lazy";
+      div.appendChild(img); track.appendChild(div);
+    });
+    const slides = [...track.children];
+    if (slides.length < 2){
+      document.getElementById("prevBtn").hidden = true;
+      document.getElementById("nextBtn").hidden = true;
+      return;
+    }
+    let idx = 0, timer;
+
+    slides.forEach((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "תמונה " + (i+1));
+      b.addEventListener("click", () => { go(i); restart(); });
+      dotsBox.appendChild(b);
+    });
+    const dots = [...dotsBox.children];
+
+    function paint(){ dots.forEach((d,i) => d.classList.toggle("active", i === idx)); }
+    function go(i){
+      idx = (i + slides.length) % slides.length;
+      track.scrollTo({ left: slides[idx].offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
+      paint();
+    }
+    function restart(){ clearInterval(timer); timer = setInterval(() => go(idx + 1), 4500); }
+
+    // עדכון הנקודה כשמחליקים ביד
+    let t;
+    track.addEventListener("scroll", () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const w = track.clientWidth;
+        const i = Math.round(Math.abs(track.scrollLeft) / w);
+        if (i !== idx){ idx = i; paint(); restart(); }
+      }, 80);
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => { go(idx + 1); restart(); });
+    document.getElementById("prevBtn").addEventListener("click", () => { go(idx - 1); restart(); });
+    track.parentElement.addEventListener("mouseenter", () => clearInterval(timer));
+    track.parentElement.addEventListener("mouseleave", restart);
+
+    paint(); restart();
+  })();
+</script>
+</body>
+</html>
