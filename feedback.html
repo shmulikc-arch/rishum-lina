@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>משוב על השהות | לב חב"ד אסף הרופא</title>
+<meta name="description" content="נשמח לשמוע איך הייתה השהות שלכם בחדרי האירוח של לב חב&quot;ד אסף הרופא">
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --burgundy:#600627;
+    --burgundy-dark:#45041c;
+    --orange:#f28c38;
+    --orange-soft:#fff3e8;
+    --bg:#faf6f2;
+    --card:#ffffff;
+    --text:#2a1a1f;
+    --muted:#7a6a6f;
+    --line:#e7dcd6;
+    --error:#c0392b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Heebo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;display:flex;flex-direction:column;
+  }
+  .topbar{
+    background:#fff;display:flex;justify-content:center;align-items:center;
+    padding:14px 16px;border-bottom:4px solid var(--orange);
+  }
+  .topbar img{height:62px;width:auto;display:block}
+  @media (min-width:600px){ .topbar img{height:78px} }
+
+  .band{
+    background:var(--burgundy);
+    background-image:radial-gradient(circle at 50% 0%, rgba(242,140,56,.22), transparent 60%);
+    color:#fff;text-align:center;padding:30px 16px 88px;
+  }
+  .band h1{margin:0 0 6px;font-size:clamp(26px,6vw,34px);font-weight:800;letter-spacing:-.3px}
+  .band p{margin:0 auto;max-width:440px;opacity:.9;font-size:16px}
+
+  .wrap{width:100%;max-width:560px;margin:-64px auto 0;padding:0 16px;flex:1}
+  .card{
+    background:var(--card);border-radius:18px;
+    box-shadow:0 10px 30px rgba(69,4,28,.12);
+    padding:24px 20px 26px;
+  }
+  @media (min-width:520px){ .card{padding:30px 32px 32px} }
+
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+  label{font-size:15px;font-weight:500}
+  label .req{color:var(--burgundy);margin-inline-start:2px}
+  .hint{font-size:13px;color:var(--muted)}
+  input,textarea{
+    font:inherit;font-size:16px;color:var(--text);width:100%;
+    padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea{min-height:180px;resize:vertical;line-height:1.6}
+  input:focus,textarea:focus{outline:none;border-color:var(--burgundy);box-shadow:0 0 0 3px rgba(96,6,39,.12)}
+  .invalid{border-color:var(--error)!important}
+  .err{color:var(--error);font-size:13px}
+  .err:empty{display:none}
+  .hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;opacity:0}
+
+  button{
+    font:inherit;font-weight:700;font-size:17px;width:100%;margin-top:6px;
+    padding:14px 18px;border:0;border-radius:12px;
+    background:var(--burgundy);color:#fff;cursor:pointer;
+    transition:background .15s, transform .05s;
+  }
+  button:hover{background:var(--burgundy-dark)}
+  button:active{transform:translateY(1px)}
+  button[disabled]{opacity:.65;cursor:wait}
+  .form-msg{margin-top:14px;text-align:center;font-size:14px;color:var(--error)}
+  .form-msg:empty{display:none}
+
+  .done{text-align:center;padding:14px 4px 4px;display:none}
+  .done.show{display:block}
+  .done .icon{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;background:var(--orange-soft);display:grid;place-items:center}
+  .done h2{margin:0 0 8px;color:var(--burgundy);font-size:24px}
+  .done p{margin:0 0 6px;color:var(--muted)}
+
+  footer{text-align:center;font-size:12.5px;color:var(--muted);padding:28px 16px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="logo.png" alt="לב חב&quot;ד במרכז הרפואי שמיר - אסף הרופא">
+</div>
+
+<header class="band">
+  <h1>נשמח לשמוע מכם</h1>
+  <p>המשוב שלכם עוזר לנו לשפר את חדרי האירוח עבור המשפחות הבאות</p>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <form id="fbForm" novalidate>
+      <div class="field">
+        <label for="email">האימייל שאיתו נרשמתם<span class="req">*</span></label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" style="text-align:right" placeholder="name@example.com" required>
+        <span class="hint" id="emailHint">כדי שנדע לשייך את המשוב לשהות שלכם</span>
+        <div class="err"></div>
+      </div>
+
+      <div class="field">
+        <label for="feedback">נשמח לשמוע איך הייתה לכם השהות אצלנו<span class="req">*</span></label>
+        <textarea id="feedback" name="feedback" placeholder="כתבו כאן כל מה שעל ליבכם..." required></textarea>
+        <div class="err"></div>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label>אל תמלאו שדה זה <input name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button type="submit" id="submitBtn">שליחת משוב</button>
+      <div class="form-msg" id="formMsg" role="alert"></div>
+    </form>
+
+    <div class="done" id="done" aria-live="polite">
+      <div class="icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#600627" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      </div>
+      <h2>תודה רבה!</h2>
+      <p>המשוב שלכם התקבל ויעזור לנו להמשיך ולהשתפר.</p>
+      <p>מאחלים בשורות טובות.</p>
+    </div>
+  </div>
+</main>
+
+<footer>לב חב"ד שמיר - אסף הרופא · הכתובת שלך במרכז הרפואי</footer>
+
+<script>
+  // אותה כתובת כמו בטופס הרישום
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfPtCReOZYXbZqq94Vr1HmR2ibyvsCHaz1dyHbZc8GiHHios1BN9cNQdrYdvFGRaiDRg/exec";
+
+  const form = document.getElementById("fbForm");
+  const btn = document.getElementById("submitBtn");
+  const formMsg = document.getElementById("formMsg");
+  const emailEl = document.getElementById("email");
+
+  // האימייל מגיע מוכן מהקישור במייל (?e=...)
+  try {
+    const e = new URLSearchParams(location.search).get("e");
+    if (e) {
+      emailEl.value = e;
+      document.getElementById("emailHint").textContent = "מילאנו בשבילכם לפי המייל ששלחנו";
+    }
+  } catch (_) {}
+
+  function setErr(id, msg){
+    const el = document.getElementById(id);
+    el.classList.toggle("invalid", !!msg);
+    el.closest(".field").querySelector(".err").textContent = msg || "";
+    return !msg;
+  }
+  form.addEventListener("input", e => { if (e.target.classList.contains("invalid")) setErr(e.target.id, ""); });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    formMsg.textContent = "";
+    const d = {
+      type: "feedback",
+      feedback: form.feedback.value.trim(),
+      email: emailEl.value.trim(),
+      website: form.website.value
+    };
+    let ok = setErr("feedback", d.feedback ? "" : "נשמח שתכתבו כמה מילים");
+    ok = setErr("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) ? "" : "נא למלא כתובת אימייל תקינה") && ok;
+    if (!ok){ const f = form.querySelector(".invalid"); if (f) f.focus(); return; }
+
+    btn.disabled = true; btn.textContent = "שולח...";
+    try{
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(d)
+      });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || "שגיאה");
+      form.style.display = "none";
+      document.getElementById("done").classList.add("show");
+    } catch(err){
+      console.error(err);
+      formMsg.textContent = "משהו השתבש בשליחה. נסו שוב בעוד רגע.";
+    } finally {
+      btn.disabled = false; btn.textContent = "שליחת משוב";
+    }
+  });
+</script>
+</body>
+</html>

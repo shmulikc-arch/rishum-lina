@@ -269,8 +269,8 @@
           <div class="err"></div>
         </div>
         <div class="field">
-          <label for="departure">תאריך עזיבה משוער <span class="opt">(אם ידוע)</span></label>
-          <input id="departure" name="departure" type="date">
+          <label for="departure">תאריך עזיבה<span class="req">*</span></label>
+          <input id="departure" name="departure" type="date" required>
           <div class="err"></div>
         </div>
       </div>
@@ -380,7 +380,7 @@
     ok = setErr("relation", d.relation ? "" : "נא לבחור קרבה") && ok;
     ok = setErr("department", d.department ? "" : "נא למלא מחלקה") && ok;
     ok = setErr("arrival", d.arrival ? "" : "נא לבחור תאריך הגעה") && ok;
-    ok = setErr("departure", (!d.departure || !d.arrival || d.departure >= d.arrival) ? "" : "תאריך העזיבה לפני תאריך ההגעה") && ok;
+    ok = setErr("departure", !d.departure ? "נא לבחור תאריך עזיבה" : (d.arrival && d.departure < d.arrival) ? "תאריך העזיבה לפני תאריך ההגעה" : "") && ok;
     const g = Number(d.guests);
     ok = setErr("guests", Number.isInteger(g) && g >= 1 && g <= 20 ? "" : "נא למלא מספר בין 1 ל-20") && ok;
     return ok;
