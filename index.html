@@ -47,12 +47,12 @@
   .hero{
     position:relative;
     height:470px;
-    background:#2a0a14 url("banner.jpg") 92% 30%/cover no-repeat;
+    background:#2a0a14 url("banner.jpg") 90% 45%/cover no-repeat;
     display:flex;align-items:flex-end;justify-content:center;
     text-align:center;color:#fff;
     padding:0 16px 92px;
   }
-  @media (min-width:700px){ .hero{height:min(48vw,580px);background-position:center 45%;padding-bottom:104px} }
+  @media (min-width:700px){ .hero{height:min(48vw,580px);background-position:center 66%;padding-bottom:104px} }
   .hero::before{
     content:"";position:absolute;inset:0;
     background:
@@ -160,7 +160,11 @@
   }
   .track::-webkit-scrollbar{display:none}
   .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:3/2;position:relative}
-  .slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .slide{overflow:hidden;background:#2a0a14}
+  .slide img{width:100%;height:100%;object-fit:cover;display:block;position:relative}
+  /* תמונה לאורך: מוצגת שלמה, עם רקע מטושטש מאותה תמונה */
+  .slide .blur{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(18px) brightness(.75)}
+  .slide.portrait img{object-fit:contain}
   .nav{
     position:absolute;top:50%;transform:translateY(-50%);
     width:40px;height:40px;margin:0;padding:0;border-radius:50%;
@@ -342,7 +346,10 @@
   //  לדוגמה: ["gallery-1.jpg", "gallery-2.jpg", "gallery-3.jpg"]
   //  רשימה ריקה = הגלריה לא מוצגת.
   // ============================================================
-  const GALLERY_IMAGES = [];
+  const GALLERY_IMAGES = [
+    "gallery-1.jpg", "gallery-2.jpg", "gallery-3.jpg",
+    "gallery-4.jpg", "gallery-5.jpg", "gallery-6.jpg"
+  ];
 
   const form = document.getElementById("regForm");
   const btn = document.getElementById("submitBtn");
@@ -438,7 +445,14 @@
       const div = document.createElement("div");
       div.className = "slide";
       const img = document.createElement("img");
-      img.src = src; img.alt = "חדרי האירוח - תמונה " + (i+1); img.loading = "lazy";
+      img.src = src; img.alt = "חדרי האירוח - תמונה " + (i+1); img.loading = i === 0 ? "eager" : "lazy";
+      img.addEventListener("load", () => {
+        if (img.naturalHeight > img.naturalWidth){
+          const bg = document.createElement("div");
+          bg.className = "blur"; bg.style.backgroundImage = "url('" + src + "')";
+          div.prepend(bg); div.classList.add("portrait");
+        }
+      });
       div.appendChild(img); track.appendChild(div);
     });
     const slides = [...track.children];
