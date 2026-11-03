@@ -22,14 +22,15 @@
   h1{font-size:clamp(26px,6.5vw,36px);line-height:1.3;margin:14px auto 12px;max-width:520px;font-weight:800}
   .lead{max-width:480px;margin:0 auto;opacity:.92;font-size:16px}
   .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:560px;margin:22px auto 0}
-  .tile{background:#fff;color:var(--text);border-radius:14px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
-  .tile .i{font-size:30px;line-height:1}
+  .tile{background:#fff;color:var(--text);border-radius:14px;padding:6px 6px 14px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow:hidden}
+  .tile img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;display:block}
   .tile b{color:var(--burgundy);font-size:14px;margin-top:8px}
   .tile span{color:var(--muted);font-size:12.5px;line-height:1.4;margin-top:2px;text-align:center}
   .cta{max-width:420px;margin:24px auto 0;display:flex;flex-direction:column;gap:12px}
   .btn{display:block;text-align:center;padding:15px 18px;border-radius:12px;font-weight:700;font-size:18px;text-decoration:none}
   .btn.main{background:var(--orange);color:#fff}
   .btn.ghost{border:2px solid #fff;color:#fff}
+  .btn small{display:block;font-size:13px;font-weight:500;opacity:.9;margin-top:2px}
   .tax{font-size:13px;opacity:.8;margin-top:14px}
   .wrap{max-width:600px;margin:0 auto;padding:28px 16px 10px;text-align:center}
   .wrap h2{color:var(--burgundy);font-size:21px;margin:0 0 4px}
@@ -48,13 +49,13 @@
   <h1>הלילה תגיע לכאן משפחה נוספת.<br>עזרו לנו לארח אותה.</h1>
   <p class="lead">חדרי האירוח, עגלת הרענון וקרון החוויות פועלים כל השנה במרכז הרפואי שמיר - אסף הרופא, בזכות שותפים כמוכם.</p>
   <div class="tiles">
-    <div class="tile"><div class="i">🛏️</div><b>חדרי האירוח</b><span>לינה למשפחות ליד המחלקה</span></div>
-    <div class="tile"><div class="i">☕</div><b>עגלת הרענון</b><span>כיבוד ושתייה חמה במחלקות</span></div>
-    <div class="tile"><div class="i">🧸</div><b>קרון החוויות</b><span>משחקים לילדים המאושפזים</span></div>
+    <div class="tile"><img src="tile-rooms.jpg" alt="חדרי האירוח"><b>חדרי האירוח</b><span>לינה למשפחות ליד המחלקה</span></div>
+    <div class="tile"><img src="tile-cart.jpg" alt="עגלת הרענון"><b>עגלת הרענון</b><span>כיבוד ושתייה חמה במחלקות</span></div>
+    <div class="tile"><img src="tile-toys.jpg" alt="קרון החוויות"><b>קרון החוויות</b><span>משחקים לילדים המאושפזים</span></div>
   </div>
   <div class="cta">
-    <a class="btn main" href="https://pay.grow.link/221a89f90b08f4c1857a6c018594d8e8-MjkxOTYzMg">הצטרפו לשותפים הקבועים</a>
-    <a class="btn ghost" href="https://pay.grow.link/7dc59fb85b687ebcd1290a939743a02a-MjkxOTYwNg">תרומה חד-פעמית</a>
+    <a class="btn main" data-to="once" href="go.html?to=once&src=direct">❤️ אני רוצה לתרום<small>בכל סכום שתבחרו</small></a>
+    <a class="btn ghost" data-to="monthly" href="go.html?to=monthly&src=direct">תרומה חודשית קבועה</a>
   </div>
   <div class="tax">התרומות מוכרות לזיכוי מס לפי סעיף 46 לפקודת מס הכנסה</div>
 </section>
@@ -67,6 +68,16 @@
 </section>
 
 <div class="contact">לפרטים: הרב מענדי בקרמן · <a href="tel:0536290363">053-629-0363</a></div>
-<footer>לב חב"ד - חסד ומרפא · הכתובת שלך במרכז הרפואי</footer>
+<footer>לב חב"ד שמיר - אסף הרופא</footer>
+<script>
+  // מעביר הלאה את מקור ההגעה (למשל SMS) ואת האימייל, כדי שהלחיצה תירשם בגיליון
+  try {
+    const q = new URLSearchParams(location.search);
+    const src = q.get("src") || "direct", e = q.get("e") || "";
+    document.querySelectorAll("a[data-to]").forEach(a => {
+      a.href = "go.html?to=" + a.dataset.to + "&src=" + encodeURIComponent(src) + (e ? "&e=" + encodeURIComponent(e) : "");
+    });
+  } catch (_) {}
+</script>
 </body>
 </html>

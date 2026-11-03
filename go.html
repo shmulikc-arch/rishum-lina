@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>מעבירים לדף התרומה... | לב חב"ד אסף הרופא</title>
+<link rel="icon" href="logo.png">
+<style>
+  html,body{margin:0;height:100%}
+  body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+       font-family:"Heebo",system-ui,Arial,sans-serif;background:#faf6f2;color:#600627;text-align:center;padding:16px}
+  img{height:60px}
+  .spin{width:30px;height:30px;border:3px solid #f3d9c4;border-top-color:#f28c38;border-radius:50%;animation:s .8s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  a{color:#600627;font-size:14px}
+</style>
+</head>
+<body>
+<img src="logo.png" alt='לב חב"ד שמיר - אסף הרופא'>
+<div class="spin" aria-hidden="true"></div>
+<div>מעבירים אתכם לדף התרומה...</div>
+<a id="manual" href="#">אם לא עברתם אוטומטית, לחצו כאן</a>
+
+<script>
+  // אותה כתובת כמו בטופס הרישום
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfPtCReOZYXbZqq94Vr1HmR2ibyvsCHaz1dyHbZc8GiHHios1BN9cNQdrYdvFGRaiDRg/exec";
+  const TARGETS = {
+    monthly: "https://pay.grow.link/221a89f90b08f4c1857a6c018594d8e8-MjkxOTYzMg",
+    once:    "https://pay.grow.link/7dc59fb85b687ebcd1290a939743a02a-MjkxOTYwNg"
+  };
+  const q = new URLSearchParams(location.search);
+  const to = TARGETS[q.get("to")] ? q.get("to") : "once";
+  const dest = TARGETS[to];
+  document.getElementById("manual").href = dest;
+
+  let gone = false;
+  const go = () => { if (!gone) { gone = true; location.replace(dest); } };
+  try {
+    fetch(SCRIPT_URL, {
+      method: "POST", keepalive: true,
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ type: "click", to: to, src: q.get("src") || "direct", e: q.get("e") || "" })
+    }).finally(go);
+  } catch (_) {}
+  setTimeout(go, 700);   // לא מחכים יותר מ-0.7 שנייה, גם אם הרישום מתעכב
+</script>
+</body>
+</html>
